@@ -24,7 +24,12 @@ jobs:
     # Instalations, Folder and Bagit
       
     - name: install ocrd
-      run: git clone --depth 1 https://github.com/OCR-D/core; ls -l;cd core; make install;cd ..;rm -rf core
+      run: |
+        git clone --depth 1 https://github.com/OCR-D/core
+        cd core
+        make install
+        cd ..
+        rm -rf core
           
     - name: Download and install saxon
       run: wget https://sourceforge.net/projects/saxon/files/Saxon-HE/10/Java/SaxonHE10-5J.zip/download && unzip download
