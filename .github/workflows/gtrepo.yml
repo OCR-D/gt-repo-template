@@ -5,31 +5,23 @@ name: gtrepo
       - main
   workflow_dispatch:
 jobs:
-  production-deploy:
-  if: contains(github.event.head_commit.message, 'realease')
-
   cli:
-    name: makeBagit
+    name: gtrepo_And_Bagit
     runs-on: ubuntu-latest
     steps:
     
     - name: Git checkout
       uses: actions/checkout@v2
+
+   # Instalations Styles
       
-    # Instalations Styles
-    
     - name: install anaylse xsl-styles
-       run: |
-        git clone  --depth 1 https://github.com/tboenig/gt-repo-scripts.git
+      run: | 
+        git clone https://github.com/tboenig/gt-repo-scripts.git
         mv gt-repo-scripts/scripts scripts/
-        rm -r gt-repo-scripts 
-
-
-
-
-
-
-    # Instalations, Folder and Bagit
+        rm -r gt-repo-scripts
+   
+   # Instalations, Folder and Bagit
       
     - name: install ocrd
       run: |
