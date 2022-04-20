@@ -1,0 +1,21 @@
+schema: https://github.com/tboenig/meins/schema/2021-10-15/schema.json
+title: 
+url: https://github.com/tboenig/gt-repo-example
+authors: []
+description: Dieses Repositorium dient als Vorlage für vergleichbare Repositorien, die Ground Truth-Daten öffentlich zur Verfügung stellen möchten. Nach Prüfung und den entsprechenden Lizenzen kann dieses Repo in das OCR-D-GT-Repo eingebunden werden.
+language:
+  - deu
+script:
+  - Latn
+script-type: only-manuscript
+time:
+  notBefore: '1'
+  notAfter: '2'
+hands:
+  count: '1'
+  precision: exact
+license:
+  - name: CC-BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+gtTyp: data_document
+format: Page-XML
