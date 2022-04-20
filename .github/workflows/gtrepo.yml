@@ -3,10 +3,9 @@ name: gtrepo
   push:
     branches:
       - main
-  workflow_dispatch:
+       tags:
+         -'*'
 jobs:
-  production-deploy:
-  if: contains(github.event.head_commit.message, 'release')
   cli:
     name: gtrepo_And_Bagit
     runs-on: ubuntu-latest
