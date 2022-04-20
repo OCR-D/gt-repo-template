@@ -9,9 +9,8 @@ jobs:
     - name: push the realease
       if: contains(github.event.head_commit.message, 'realease')
       run: |
-    
-   - name: Git checkout
-     uses: actions/checkout@v2
+    - name: Git checkout
+      uses: actions/checkout@v2
       
     # Instalations Styles
     
