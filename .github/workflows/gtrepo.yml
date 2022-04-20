@@ -9,18 +9,22 @@ jobs:
     - name: push the realease
       if: contains(github.event.head_commit.message, 'realease')
       run: |
-    - name: Git checkout
-      uses: actions/checkout@v2
+- name: Git checkout
+  uses: actions/checkout@v2
       
     # Instalations Styles
     
-    - name: install anaylse xsl-styles
-      run: |
-         git clone https://github.com/tboenig/gt-repo-scripts.git 
-         mv gt-repo-scripts/scripts scripts/ 
-         rm -r gt-repo-scripts 
-      
-     
+ - name: install anaylse xsl-styles
+    run: |
+      git clone https://github.com/tboenig/gt-repo-scripts.git
+      mv gt-repo-scripts/scripts scripts/
+      rm -r gt-repo-scripts 
+
+
+
+
+
+
     # Instalations, Folder and Bagit
       
     - name: install ocrd
