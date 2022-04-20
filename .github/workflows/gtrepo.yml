@@ -20,7 +20,7 @@ jobs:
     
     - name: install anaylse xsl-styles
        run: |
-        git clone https://github.com/tboenig/gt-repo-scripts.git
+        git clone  --depth 1 https://github.com/tboenig/gt-repo-scripts.git
         mv gt-repo-scripts/scripts scripts/
         rm -r gt-repo-scripts 
 
