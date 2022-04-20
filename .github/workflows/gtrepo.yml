@@ -5,6 +5,8 @@ name: gtrepo
       - main
   workflow_dispatch:
 jobs:
+  production-deploy:
+  if: contains(github.event.head_commit.message, 'release')
   cli:
     name: gtrepo_And_Bagit
     runs-on: ubuntu-latest
