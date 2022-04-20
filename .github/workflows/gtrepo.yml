@@ -1,24 +1,28 @@
 name: gtrepo
-on:  push
-    
+'on':
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
+  production-deploy:
+  if: contains(github.event.head_commit.message, 'realease')
+
   cli:
     name: makeBagit
     runs-on: ubuntu-latest
     steps:
-    - name: push the realease
-      if: contains(github.event.head_commit.message, 'realease')
-      run: |
-- name: Git checkout
-  uses: actions/checkout@v2
+    
+    - name: Git checkout
+      uses: actions/checkout@v2
       
     # Instalations Styles
     
- - name: install anaylse xsl-styles
-    run: |
-      git clone https://github.com/tboenig/gt-repo-scripts.git
-      mv gt-repo-scripts/scripts scripts/
-      rm -r gt-repo-scripts 
+    - name: install anaylse xsl-styles
+       run: |
+        git clone https://github.com/tboenig/gt-repo-scripts.git
+        mv gt-repo-scripts/scripts scripts/
+        rm -r gt-repo-scripts 
 
 
 
