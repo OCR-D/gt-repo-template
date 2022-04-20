@@ -8,7 +8,7 @@ name: gtrepo
       version:
         description: Make a new Release
         default: yes
-        required: true
+        required: yes
 jobs:
   cli:
     name: gtrepo_And_Bagit
