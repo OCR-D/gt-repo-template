@@ -46,8 +46,13 @@ jobs:
     - name: make gh-pages_out
       run: mkdir ghout
       
-    - name: make readme_out and empty readme.xml file
+    - name: make readme_out 
       run:  sh scripts/readmefolder.sh
+
+
+
+    - name: readme.xml file
+      run: sh scripts/xreadme.sh  
 
           
     
