@@ -33,7 +33,7 @@ jobs:
        make install
        cd ..
        rm -rf core
-       pip install click==8.0.1
+       
           
     - name: Download and install saxon
       run: |
