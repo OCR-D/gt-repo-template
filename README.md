@@ -18,42 +18,12 @@
 ### Step 4
 
 
-* Adapt the readme file. You can use the following paragraphs as a template.
+* Customize the new readme file. 
+* In the `<div id="extent">` section, you can additions to the README file
+
+You can find the old readme file in the readme folder.
 
 <hr/>
-
-# Title of your dataset
-
-You can delete the following three paragraphs, they are just there to explain what's going on.
-
-## License
-
-To specify an appropriate license for the ground truth, please use the following information and notes.
-
-:information_source:  Licensing a repository: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
-
-:information_source: Choose your licenses: https://choosealicense.com/
-
-It is recommended to use a Creative Commons Zero v1.0 Universal license. 
-
-## Description
-
-Complete here
-
-## Extent
-
-Complete here
-
-## Transcription guidelines
-
-Complete here.
-
-## Sources
-
-Complete here.
-
-
-________________
 
 # <a name="myfootnote1">🗀</a>  Organization of folders and files in the Repo
 
@@ -68,7 +38,6 @@ ________________
 └── data
       └── document_title or identifer
           ├── GT-PAGE
-          ├── GT-ALTO
           └── GT-LINE
             
            
