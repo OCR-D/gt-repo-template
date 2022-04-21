@@ -6,7 +6,7 @@
 
 ### Step 2
 
-* Metadata is necessary to ensure that your repository is documented correctly. It is best to use the <a href="https://tboenig.github.io/gt-metadata/document-your-data.html" target="_blank" rel="noopener noreferrer">metadata</a> form to record the metadata.
+* Metadata is necessary to ensure that your repository is documented correctly. It is best to use the <a href="https://tboenig.github.io/gt-metadata/document-your-gt.html" target="_blank" rel="noopener noreferrer">metadata</a> form to record the metadata.
 
 
 ### Step 3
