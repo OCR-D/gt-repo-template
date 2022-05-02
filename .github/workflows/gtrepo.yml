@@ -98,6 +98,11 @@ jobs:
         -s:scripts/gt-overview_metadata.xsl -o:README.md
       shell: bash
   
+    - name: Index-link
+      run: |
+         cd ghout
+         ln -s metadata.md index.md
+
          
    # Bagit
 
