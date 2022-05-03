@@ -12,6 +12,10 @@ jobs:
   cli:
     name: makeBagit
     runs-on: ubuntu-latest
+    permissions:
+     checks: write
+     contents: write
+     
     steps:
      
     - name: Git checkout
