@@ -5,8 +5,7 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  actions: write
+
 
 jobs:
   cli:
