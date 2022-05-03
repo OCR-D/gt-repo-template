@@ -164,12 +164,11 @@ jobs:
         git push origin HEAD:main
 
 
-    - name: Deploy GT-Overview to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
+    - name: Deploy GT-Overview to GitHub Pages 🚀
+      uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: ghout # The folder the action should deploy.        
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ghout  # The folder the action should deploy.           
    
    
    
