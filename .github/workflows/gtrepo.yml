@@ -73,7 +73,7 @@ jobs:
     - name: transform METADATA and make GT-Overview
       run: |
         java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=METADATA repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY \
+        output=METADATA repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER \
         -s:scripts/gt-overview_metadata.xsl -o:ghout/metadata.md
       shell: bash
 
@@ -104,6 +104,13 @@ jobs:
         output=README repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
         -s:scripts/gt-overview_metadata.xsl -o:README.md
       shell: bash
+      
+    - name: generate METS Volume File
+      run: |
+        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
+        output=METSvolume repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER \
+        -s:scripts/gt-overview_metadata.xsl -o:ocrdzip_out/mets.xml
+      shell: bash  
   
     - name: Index-link
       run: |
