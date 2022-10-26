@@ -20,7 +20,7 @@ jobs:
     - name: Git checkout
       uses: actions/checkout@v2
 
-     # Instalations Styles
+    # Installation Styles
       
     - name: install anaylse xsl-styles
       run: | 
@@ -28,7 +28,11 @@ jobs:
         mv gt-repo-scripts/scripts scripts/
         rm -r gt-repo-scripts
 
+    # Installation GT-Labelling Documentation
 
+    - name: install labeling
+      run: |
+        git clone https://github.com/tboenig/gt-guidelines.git
 
      
     # Installation and Directories
@@ -175,14 +179,3 @@ jobs:
       with:
           branch: gh-pages # The branch the action should deploy to.
           folder: ghout  # The folder the action should deploy.           
-   
-   
-   
-   
-   
-   
-   
-   
-          
-          
-  
