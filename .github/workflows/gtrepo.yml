@@ -41,6 +41,7 @@ jobs:
       run: |
        git clone --depth 1 https://github.com/OCR-D/core
        cd core
+       sudo make deps-ubuntu
        make install
        cd ..
        rm -rf core
