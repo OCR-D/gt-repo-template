@@ -20,7 +20,7 @@ jobs:
     - name: Git checkout
       uses: actions/checkout@v2
 
-    # Installation Styles
+     # Instalations Styles
       
     - name: install anaylse xsl-styles
       run: | 
@@ -28,7 +28,7 @@ jobs:
         mv gt-repo-scripts/scripts scripts/
         rm -r gt-repo-scripts
 
-    # Installation GT-Labelling Documentation
+     # Instalations GT-Labelling Documentation
 
     - name: install labeling
       run: |
@@ -103,6 +103,14 @@ jobs:
         -s:scripts/gt-overview_metadata.xsl -o:scripts/mets.sh
       shell: bash
       
+    - name: generate Metadata JSON file
+      run: |
+        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
+        output=METAJSON repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER \
+        -s:scripts/gt-overview_metadata.xsl -o:ocrdzip_out/metadataj.json
+      shell: bash
+      
+      
     - name: generate README
       run: |
         java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
@@ -122,7 +130,7 @@ jobs:
         java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
         output=METSdefault repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER \
         -s:scripts/gt-overview_metadata.xsl
-      shell: bash
+      shell: bash   
   
     - name: Index-link
       run: |
@@ -186,4 +194,4 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: ghout  # The folder the action should deploy.           
+          folder: ghout  # The folder the action should deploy.
