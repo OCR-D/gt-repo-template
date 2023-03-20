@@ -18,17 +18,17 @@ jobs:
     steps:
      
     - name: Git checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-     # Instalations Styles
+     # Installations Styles
       
-    - name: install anaylse xsl-styles
+    - name: install analyse xsl-styles
       run: | 
         git clone https://github.com/tboenig/gt-repo-scripts.git
         mv gt-repo-scripts/scripts scripts/
         rm -r gt-repo-scripts
 
-     # Instalations GT-Labelling Documentation
+     # Installations GT-Labelling Documentation
 
     - name: install labeling
       run: |
@@ -37,6 +37,9 @@ jobs:
      
     # Installation and Directories
       
+    - name: install jq
+      run: sudo apt-get install jq
+    
     - name: install ocrd
       run: |
        git clone --depth 1 https://github.com/OCR-D/core
@@ -67,7 +70,7 @@ jobs:
 
           
     
-   # Transformation and analysis
+   # Transformation and analyzing
     
     - name: Get SDK Version from config
       id: lookupSdkVersion
@@ -89,7 +92,7 @@ jobs:
         -s:scripts/gt-overview_metadata.xsl -o:ghout/table.md
       shell: bash
 
-    - name: detailed table view
+    - name: detailed table view 
       run: |
         java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
         output=OVERVIEW repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
@@ -107,8 +110,14 @@ jobs:
       run: |
         java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
         output=METAJSON repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER \
-        -s:scripts/gt-overview_metadata.xsl -o:ocrdzip_out/metadata.json
+        -s:scripts/gt-overview_metadata.xsl -o:ocrdzip_out/metadata_l.json
       shell: bash
+      
+      
+    - name: format json file
+      run: |
+        jq '.' ocrdzip_out/metadata_l.json > ocrdzip_out/metadata.json
+        rm ocrdzip_out/metadata_l.json
       
       
     - name: generate README
