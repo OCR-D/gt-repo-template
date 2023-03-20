@@ -20,7 +20,7 @@ jobs:
     - name: Git checkout
       uses: actions/checkout@v3
 
-     # Installations Styles
+     # Installation Styles
       
     - name: install analyse xsl-styles
       run: | 
@@ -28,7 +28,7 @@ jobs:
         mv gt-repo-scripts/scripts scripts/
         rm -r gt-repo-scripts
 
-     # Installations GT-Labelling Documentation
+     # Installation GT-Labelling Documentation
 
     - name: install labeling
       run: |
@@ -114,9 +114,10 @@ jobs:
       shell: bash
       
       
-    - name: format json file
+    - name: format json file and copy to gh branch
       run: |
         jq '.' ocrdzip_out/metadata_l.json > ocrdzip_out/metadata.json
+        cp ocrdzip_out/metadata.json ghout/
         rm ocrdzip_out/metadata_l.json
       
       
