@@ -1,8 +1,11 @@
 name: gtrepo
-on:  
+on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      
+      
+      
   workflow_dispatch:
 
 
@@ -164,32 +167,28 @@ jobs:
     - name: archive the ocrdzip files from ocrdzip_out folder
       uses: thedoctor0/zip-release@master
       with:
-         filename: site.zip
+         filename: bagitDump-v${{ github.run_number }}.zip
          path: 'ocrdzip_out'
       
-    
-    - name: Create GitHub release
-      id: create-new-release
-      uses: actions/create-release@latest
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Upload Release
+      uses: ncipollo/release-action@v1
       with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
-          body_path: CHANGELOG.md 
-          draft: false
-          prerelease: false
-     
-    
-    - name: Upload asset to GitHub release
-      uses: actions/upload-release-asset@latest
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          upload_url: ${{ steps.create-new-release.outputs.upload_url }}
-          asset_path: ./site.zip
-          asset_name: bagitDump-v${{ github.run_number }}.zip
-          asset_content_type: application/zip
+          artifacts: './bagitDump-v*.zip'
+          artifactContentType: application/zip
+          name: Release ${{ github.run_number }}_${{ github.ref_name }}
+          body: |
+            <dl>
+            <dt>Version:</dt> 
+            <dd>${{ github.ref_name }}</dd>
+            <dt>Info:</dt>
+            <dd>To use the Ground Truth download the bagitDump-v${{ github.run_number }}.zip file.<br/>
+            The zip file contains all ocr-d-bagit files.<br/>
+            The Metadata.json file contains metadata for the Ground Truth corpus.<br/>
+            The Mets.xml file lists all containing documents/bagits.<br/>
+            The bagits correspond to the <a href="https://ocr-d.de/de/spec/ocrd_zip.html">OCR-D Bagit Spec</a>.</dd>
+            </dl>
+          token: ${{ secrets.GITHUB_TOKEN }}
           
     - name: Commit README
       run: |
@@ -201,7 +200,7 @@ jobs:
 
 
     - name: Deploy GT-Overview to GitHub Pages 🚀
-      uses: JamesIves/github-pages-deploy-action@v4.3.3
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
       with:
           branch: gh-pages # The branch the action should deploy to.
           folder: ghout  # The folder the action should deploy.
