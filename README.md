@@ -1,3 +1,43 @@
+# 🔑 What does this repo template offer for You?
+
+A template for the creation of a ground truth repo with the following functions and features: 
+   - help for the creation of metadata for the Ground Truth Repo
+   - guidelines for filing and organizing the Ground Truth Repo
+   - automatic functions that control a github-action-workflow:
+      - evaluation and generation of metadata in the formats.
+         -- METS (mets.xml)
+         -- metadata.json
+         -- metadata.yml
+      - generation of a GithubPage (ph) for the internet users
+
+
+## 🤖 How to start the automatic functions?
+
+The github-action-workflow is triggered by assigning a version tag at push.
+The version tag consists of a three-part number code.
+Number code: e.g. 1.8.11
+The number code has the following meaning:
+- the first number indicates the version number (1).
+- the second number indicates the feature (8)
+- the third number indicates the fixes, paths... (11)
+
+
+# 📓 GT repo metadata
+You can find metadata about the GT Repo in the following files.
+-- mets.xml
+-- metadata.json
+-- metadata.yml
+
+The content of the metadata files is the same, only the formats vary.
+You can find the file at:
+
+-- METS (mets.xml) 🠂 included in the zip file of the release
+-- metadata.json 🠂 https://github.com/tboenig/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
+-- metadata.yml 🠂 https://github.com/tboenig/gt_structure_1_1/blob/main/METADATA.yml
+
+
+# 👷 👷‍♀️ How to use the template
+
 ### Step 1
 
 
