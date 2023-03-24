@@ -5,9 +5,9 @@ A template for the creation of a ground truth repo with the following functions 
    - guidelines for filing and organizing the Ground Truth Repo
    - automatic functions that control a github-action-workflow:
       - evaluation and generation of metadata in the formats.
-         -- METS (mets.xml)
-         -- metadata.json
-         -- metadata.yml
+         - METS (mets.xml)
+         - JSON (metadata.json)
+         - YML (metadata.yml)
       - generation of a GithubPage (ph) for the internet users
 
 
