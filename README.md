@@ -8,7 +8,8 @@ A template for the creation of a ground truth repo with the following functions 
          - METS (mets.xml)
          - JSON (metadata.json)
          - YML (metadata.yml)
-      - generation of a GithubPage (ph) for the internet users
+      - generation of a GithubPage (ph) for the internet users e.g. https://tboenig.github.io/gt_structure_1_1/
+      - generation Releases
 
 
 ## 🤖 How to start the automatic functions?
@@ -24,16 +25,16 @@ The number code has the following meaning:
 
 # 📓 GT repo metadata
 You can find metadata about the GT Repo in the following files.
--- mets.xml
--- metadata.json
--- metadata.yml
+   - mets.xml
+   - metadata.json
+   - metadata.yml
 
 The content of the metadata files is the same, only the formats vary.
 You can find the file at:
 
--- METS (mets.xml) 🠂 included in the zip file of the release
--- metadata.json 🠂 https://github.com/tboenig/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
--- metadata.yml 🠂 https://github.com/tboenig/gt_structure_1_1/blob/main/METADATA.yml
+   - mets.xml 🠂 included in the zip file of the release
+   - metadata.json 🠂 e.g.  https://github.com/tboenig/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
+   - metadata.yml 🠂 e.g.  https://github.com/tboenig/gt_structure_1_1/blob/main/METADATA.yml
 
 
 # 👷 👷‍♀️ How to use the template
