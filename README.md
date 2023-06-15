@@ -55,7 +55,7 @@ A template for the creation of a ground truth repo with the following functions 
       └── document_title or identifer
           ├── GT-PAGE
           └── GT-LINE
-          
+ ```        
 
 ## 🤖 How to start the automatic functions?
 
@@ -84,7 +84,6 @@ You can find the file at:
             
            
 
-```
 
 
 
