@@ -33,6 +33,7 @@ jobs:
 
      # Installation GT-Labelling Documentation
 
+      
     - name: install labeling
       run: |
         git clone https://github.com/tboenig/gt-guidelines.git
@@ -58,6 +59,9 @@ jobs:
         wget https://sourceforge.net/projects/saxon/files/Saxon-HE/10/Java/SaxonHE10-5J.zip/download 
         unzip download
                       
+    - name: make metadata_out
+      run: mkdir metadata_out
+
     - name: make ocrdzip_out
       run: mkdir ocrdzip_out
       
@@ -113,15 +117,15 @@ jobs:
       run: |
         java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
         output=METAJSON repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
-        -s:scripts/gt-overview_metadata.xsl -o:ocrdzip_out/metadata_l.json
+        -s:scripts/gt-overview_metadata.xsl -o:metadata_out/metadata_l.json
       shell: bash
       
       
     - name: format json file and copy to gh branch
       run: |
-        jq '.' ocrdzip_out/metadata_l.json > ocrdzip_out/metadata.json
-        cp ocrdzip_out/metadata.json ghout/
-        rm ocrdzip_out/metadata_l.json
+        jq '.' metadata_out/metadata_l.json > metadata_out/metadata.json
+        cp metadata_out/metadata.json ghout/
+        rm metadata_out/metadata_l.json
       
       
     - name: generate README
@@ -135,7 +139,7 @@ jobs:
       run: |
         java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
         output=METSvolume repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
-        -s:scripts/gt-overview_metadata.xsl -o:ocrdzip_out/mets.xml
+        -s:scripts/gt-overview_metadata.xsl -o:metadata_out/mets.xml
       shell: bash
       
     - name: delete fileGrp DEFAULT
@@ -164,17 +168,21 @@ jobs:
         cp scripts/_config.yml ghout/ 
 
 
-    - name: archive the ocrdzip files from ocrdzip_out folder
+    - name: archive the metadata files from metadata_out folder
       uses: thedoctor0/zip-release@master
       with:
-         filename: bagitDump-v${{ github.run_number }}.zip
-         path: 'ocrdzip_out'
-      
+         filename: metadata-v${{ github.run_number }}.zip
+         path: 'metadata_out'
+
+    - name: copy metadata.zip to ocrdzip_out
+      run: | 
+        cp metadata-v${{ github.run_number }}.zip ocrdzip_out/
+        
         
     - name: Upload Release
       uses: ncipollo/release-action@v1
       with:
-          artifacts: './bagitDump-v*.zip'
+          artifacts: 'ocrdzip_out/*.zip'
           artifactContentType: application/zip
           name: Release ${{ github.run_number }}_${{ github.ref_name }}
           body: |
@@ -182,11 +190,13 @@ jobs:
             <dt>Version:</dt> 
             <dd>${{ github.ref_name }}</dd>
             <dt>Info:</dt>
-            <dd>To use the Ground Truth download the bagitDump-v${{ github.run_number }}.zip file.<br/>
-            The zip file contains all ocr-d-bagit files.<br/>
-            The Metadata.json file contains metadata for the Ground Truth corpus.<br/>
-            The Mets.xml file lists all containing documents/bagits.<br/>
+            <dd>
+            To make use of Ground Truth, please download the provided zip files.<br/>
+            The 'ocrd.zip' files are ocr-d-bagit files.<br/>
+            The 'metadata-v${{ github.run_number }}.zip' file contains metadata for the Ground Truth corpus in both METS and JSON format.<br/>
+            The 'mets.xml' file enumerates all the documents and BagIt files contained within.<br/>
             The bagits correspond to the <a href="https://ocr-d.de/de/spec/ocrd_zip.html">OCR-D Bagit Spec</a>.</dd>
+            </dl>
             </dl>
           token: ${{ secrets.GITHUB_TOKEN }}
           
