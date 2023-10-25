@@ -8,7 +8,7 @@ A template for the creation of a ground truth repo with the following functions 
          - METS (mets.xml)
          - JSON (metadata.json)
          - YML (metadata.yml)
-      - generation of a GithubPage (ph) for the internet users e.g. https://tboenig.github.io/gt_structure_1_1/
+      - generation of a GithubPage (ph) for the internet users e.g. https://OCR-D.github.io/gt_structure_1_1/
       - generation Releases
 
 
@@ -115,8 +115,8 @@ The content of the metadata files is the same, only the formats vary.
 You can find the file at:
 
    - mets.xml 🠂 included in the zip file of the release
-   - metadata.json 🠂 e.g.  https://github.com/tboenig/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
-   - metadata.yml 🠂 e.g.  https://github.com/tboenig/gt_structure_1_1/blob/main/METADATA.yml
+   - metadata.json 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
+   - metadata.yml 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/main/METADATA.yml
 
             
            
