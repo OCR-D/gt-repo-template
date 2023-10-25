@@ -41,7 +41,7 @@ A template for the creation of a ground truth repo with the following functions 
 
 <hr/>
 
-# <a name="myfootnote1">🗀</a>  Organization of folders and files in the Repo
+# <a name="myfootnote1">🗀</a>  Organization of folders and files in the GT-Repo
 
 
 **Images**: keep images in the same directory as the textual transcription (eg. GT-PAGE).
