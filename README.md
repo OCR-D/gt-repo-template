@@ -41,10 +41,30 @@ A template for the creation of a ground truth repo with the following functions 
 
 <hr/>
 
+# <a name="myfootnote1">🗉</a>  METS File
+
+The **gt-repo-template** has the capability to generate METS files for GT data, involving an analysis of both the data structure and PAGE files. Despite the availability of this automated functionality, it is recommended to consider creating a custom METS file.
+
+This METS file can contain various elements, including bibliographic and provenance data. It is essential to ensure compliance with the [OCR-D METS specification](https://ocr-d.de/en/spec/mets#requirements-on-handling-metspage). 
+
+It's important to note that referencing PAGE files using URLs/URIs is not permitted. PAGE files should be stored in the repository and referenced within the METS file as follows:
+```xml
+<mets:FLocat xlink:href="GT-PAGE/[optional folder]/[PAGE-File.xml]" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
+```
+The image file should either be referenced via a URL/URI in the METS file or, if the image files are stored in the repository, specified as a file reference in the METS file.
+- URL/URI: 
+```xml
+<mets:FLocat xlink:href="https://opendata.uni-halle.de/retrieve/0775684d-82e9-4cb0-8e03-02f34c97949a/00000412.jpg" LOCTYPE="URL"/>
+```
+- File Reference:
+```xml
+<mets:FLocat xlink:href="GT-PAGE/[optional folder]/[image folder optional]/00000412.jpg" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
+```
+
+<hr/>
+
+
 # <a name="myfootnote1">🗀</a>  Organization of folders and files in the GT-Repo
-
-
-**Images**: keep images in the same directory as the textual transcription (eg. GT-PAGE).
 
  The structure of the repo is the following:
 
@@ -53,9 +73,26 @@ A template for the creation of a ground truth repo with the following functions 
 ├── LICENSE.md
 └── data
       └── document_title or identifer
-          ├── GT-PAGE
-          └── GT-LINE
+          └── GT-PAGE
+               └── mets.xml
+          
  ```        
+**Cached Image files:**
+- In a separate directory.
+- In the same directory as the text transcription (inside the GT-PAGE folder).
+
+If you use your own METS file, the images must be referenced in it.
+
+**Linked image files as URL/URI**:
+- May be referenced in the transcribus PAGE file as a URL/URI.
+Example:
+``<TranscribusMetadata docId="1256538" pageId="50892347" pageNr="1" tsid="105748322" status="GT" userId="48446" imgUrl="https://files.transkribus.eu/Get?id=SFNIJNJBHWZPNRYZCAIWBJIA&amp;fileType=view" xmlUrl="https://files.transkribus.eu/Get?id=TWZJHYTDEPJDGTXDWJQAXHXH" imageId="27308940"/>`
+
+If you use your own METS file, the images must be referenced in it.
+- Can be referenced in the METS file as URL/URI
+Example:
+``<mets:FLocat xlink:href="https://opendata.uni-halle.de/retrieve/0775684d-82e9-4cb0-8e03-02f34c97949a/00000412.jpg" LOCTYPE="URL"/>``
+
 
 ## 🤖 How to start the automatic functions?
 
