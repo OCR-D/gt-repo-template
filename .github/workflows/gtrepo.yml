@@ -141,6 +141,13 @@ jobs:
         output=METSvolume repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
         -s:scripts/gt-overview_metadata.xsl -o:metadata_out/mets.xml
       shell: bash
+
+    - name: generate release download List
+      run: |
+        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
+        output=download repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+        -s:scripts/gt-overview_metadata.xsl -o:ghout/download.txt
+      shell: bash  
       
     - name: delete fileGrp DEFAULT
       run: |
