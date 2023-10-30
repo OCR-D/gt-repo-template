@@ -11,213 +11,284 @@ on:
 
 
 jobs:
-  cli:
-    name: makeBagit
-    runs-on: ubuntu-latest
-    permissions:
-     checks: write
-     contents: write
-     
-    steps:
-     
-    - name: Git checkout
-      uses: actions/checkout@v3
-
-     # Installation Styles
-      
-    - name: install analyse xsl-styles
-      run: | 
-        git clone https://github.com/tboenig/gt-repo-scripts.git
-        mv gt-repo-scripts/scripts scripts/
-        rm -r gt-repo-scripts
-
-     # Installation GT-Labelling Documentation
-
-      
-    - name: install labeling
-      run: |
-        git clone https://github.com/tboenig/gt-guidelines.git
-
-     
-    # Installation and Directories
-      
-    - name: install jq
-      run: sudo apt-get install jq
-    
-    - name: install ocrd
-      run: |
-       git clone --depth 1 https://github.com/OCR-D/core
-       cd core
-       sudo make deps-ubuntu
-       make install
-       cd ..
-       rm -rf core
-       
+    job1:
+        name: uniTest
+        runs-on: ubuntu-latest
+        permissions:
+            checks: write
+            contents: write
+        # Map a step output to a job output
+        outputs:
+          output1: ${{ steps.step4.outputs.test }}
+          output2: ${{ steps.step4.outputs.test2 }}
           
-    - name: Download and install saxon
-      run: |
-        wget https://sourceforge.net/projects/saxon/files/Saxon-HE/10/Java/SaxonHE10-5J.zip/download 
-        unzip download
-                      
-    - name: make metadata_out
-      run: mkdir metadata_out
+        steps:
+          - name: Git checkout
+            id: step1
+            uses: actions/checkout@v3
 
-    - name: make ocrdzip_out
-      run: mkdir ocrdzip_out
+           # Installation Styles and Saxon
       
-    - name: make gh-pages_out
-      run: mkdir ghout
-      
-    - name: make readme_out 
-      run:  sh scripts/readmefolder.sh
-
-
-    - name: readme.xml file
-      run: sh scripts/xreadme.sh  
-
+          - name: install analyse xsl-styles
+            id: step2
+            run: | 
+                git clone https://github.com/tboenig/gt-repo-scripts.git
+                mv gt-repo-scripts/scripts scripts/
+                rm -r gt-repo-scripts
           
+          - name: Download and install saxon
+            id: step3
+            run: |
+              wget https://github.com/Saxonica/Saxon-HE/releases/download/SaxonHE12-3/SaxonHE12-3J.zip 
+              unzip SaxonHE12-3J.zip      
+          
+
+           # Installation and Directories   
+          
+          - name: make gh-pages_out
+            run: mkdir ghout
+
+
+          - name: Get SDK Version from config
+            id: lookupSdkVersion
+            uses: mikefarah/yq@master
+            with:
+             cmd: yq -o=json METADATA.yml > METADATA.json  
+
+          - name: PathTest
+            run: |
+                java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_unitTest.xsl \
+                output=unitTest1 \
+                -s:scripts/gt-overview_unitTest.xsl -o:ghout/pathtest.md
+            shell: bash
+
+          # Test GT-Page Folder Repo Structure
+          
+          - name: Empty
+            id: step4
+            run: |
+                [ -s ghout/pathtest.md ] || echo "test=empty" >> $GITHUB_OUTPUT
+                [ ! -s ghout/pathtest.md ] || echo "test2=full" >> $GITHUB_OUTPUT
+          
+          # Error Logview     
+          
+          - name: uniTestError
+            id: step5
+            if: ${{steps.step4.outputs.test2 == 'full'}}  
+            run: |
+              less ghout/pathtest.md          
+   
     
-   # Transformation and analyzing
-    
-    - name: Get SDK Version from config
-      id: lookupSdkVersion
-      uses: mikefarah/yq@master
-      with:
-       cmd: yq -o=json METADATA.yml > METADATA.json
-           
-    - name: transform METADATA and make GT-Overview
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=METADATA repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
-        -s:scripts/gt-overview_metadata.xsl -o:ghout/metadata.md
-      shell: bash
-
-    - name: make Compressed table view
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=TABLE repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY \
-        -s:scripts/gt-overview_metadata.xsl -o:ghout/table.md
-      shell: bash
-
-    - name: detailed table view 
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=OVERVIEW repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
-        -s:scripts/gt-overview_metadata.xsl -o:ghout/overview.md
-      shell: bash
-
-    - name: generate mets.sh
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=METS repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
-        -s:scripts/gt-overview_metadata.xsl -o:scripts/mets.sh
-      shell: bash
-      
-    - name: generate Metadata JSON file
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=METAJSON repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
-        -s:scripts/gt-overview_metadata.xsl -o:metadata_out/metadata_l.json
-      shell: bash
-      
-      
-    - name: format json file and copy to gh branch
-      run: |
-        jq '.' metadata_out/metadata_l.json > metadata_out/metadata.json
-        cp metadata_out/metadata.json ghout/
-        rm metadata_out/metadata_l.json
-      
-      
-    - name: generate README
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=README repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
-        -s:scripts/gt-overview_metadata.xsl -o:README.md
-      shell: bash
-      
-    - name: generate METS Volume File
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=METSvolume repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
-        -s:scripts/gt-overview_metadata.xsl -o:metadata_out/mets.xml
-      shell: bash
-
-    - name: generate release download List
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=download repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
-        -s:scripts/gt-overview_metadata.xsl -o:ghout/download.txt
-      shell: bash  
-      
-    - name: delete fileGrp DEFAULT
-      run: |
-        java -jar saxon-he-10.5.jar -xsl:scripts/gt-overview_metadata.xsl \
-        output=METSdefault repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
-        -s:scripts/gt-overview_metadata.xsl
-      shell: bash   
+    job2:
+        name: analyse_and_makebagit
+        needs: job1
+        if: ${{needs.job1.outputs.output1 == 'empty'}}        
+        runs-on: ubuntu-latest
+        permissions:
+            checks: write
+            contents: write
+              
+        
+        steps:
   
-    - name: Index-link
-      run: |
-         cd ghout
-         ln -s metadata.md index.md
-
-         
-   # Bagit
-
-    - name: make bagit
-      run: sh scripts/data_structure.sh
-      shell: bash
-
-
-    - name: copy css styles and yml files to ghout
-      run: | 
-        cp scripts/table_hide.css ghout/
-        cp scripts/_config.yml ghout/ 
-
-
-    - name: archive the metadata files from metadata_out folder
-      uses: thedoctor0/zip-release@master
-      with:
-         filename: metadata-v${{ github.run_number }}.zip
-         path: 'metadata_out'
-
-    - name: copy metadata.zip to ocrdzip_out
-      run: | 
-        cp metadata-v${{ github.run_number }}.zip ocrdzip_out/
-        
-        
-    - name: Upload Release
-      uses: ncipollo/release-action@v1
-      with:
-          artifacts: 'ocrdzip_out/*.zip'
-          artifactContentType: application/zip
-          name: Release ${{ github.run_number }}_${{ github.ref_name }}
-          body: |
-            <dl>
-            <dt>Version:</dt> 
-            <dd>${{ github.ref_name }}</dd>
-            <dt>Info:</dt>
-            <dd>
-            To make use of Ground Truth, please download the provided zip files.<br/>
-            The 'ocrd.zip' files are ocr-d-bagit files.<br/>
-            The 'metadata-v${{ github.run_number }}.zip' file contains metadata for the Ground Truth corpus in both METS and JSON format.<br/>
-            The 'mets.xml' file enumerates all the documents and BagIt files contained within.<br/>
-            The bagits correspond to the <a href="https://ocr-d.de/de/spec/ocrd_zip.html">OCR-D Bagit Spec</a>.</dd>
-            </dl>
-            </dl>
-          token: ${{ secrets.GITHUB_TOKEN }}
+          - name: Git checkout
+            uses: actions/checkout@v3
+      
+            # Installation Styles
+            
+          - name: install analyse xsl-styles
+            run: | 
+              git clone https://github.com/tboenig/gt-repo-scripts.git
+              mv gt-repo-scripts/scripts scripts/
+              rm -r gt-repo-scripts
+      
+            # Installation GT-Labelling Documentation
+      
+            
+          - name: install labeling
+            run: |
+              git clone https://github.com/tboenig/gt-guidelines.git
+      
+            
+          # Installation and Directories
+            
+          - name: install jq
+            run: sudo apt-get install jq
           
-    - name: Commit README
-      run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add README.md
-        git commit -m "[Automatic] Update readme files" || echo "Nothing to update"
-        git push origin HEAD:main
-
-
-    - name: Deploy GT-Overview to GitHub Pages 🚀
-      uses: JamesIves/github-pages-deploy-action@v4.4.1
-      with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: ghout  # The folder the action should deploy.
+          - name: install ocrd
+            run: |
+              git clone --depth 1 https://github.com/OCR-D/core
+              cd core
+              sudo make deps-ubuntu
+              make install
+              cd ..
+              rm -rf core
+              
+                
+          - name: Download and install saxon
+            run: |
+              wget https://github.com/Saxonica/Saxon-HE/releases/download/SaxonHE12-3/SaxonHE12-3J.zip 
+              unzip SaxonHE12-3J.zip
+                            
+          - name: make metadata_out
+            run: mkdir metadata_out
+      
+          - name: make ocrdzip_out
+            run: mkdir ocrdzip_out
+            
+          - name: make gh-pages_out
+            run: mkdir ghout
+            
+          - name: make readme_out 
+            run:  sh scripts/readmefolder.sh
+      
+      
+          - name: readme.xml file
+            run: sh scripts/xreadme.sh  
+      
+                
+          
+          # Transformation and analyzing
+          
+          - name: Get SDK Version from config
+            id: lookupSdkVersion
+            uses: mikefarah/yq@master
+            with:
+              cmd: yq -o=json METADATA.yml > METADATA.json
+                  
+          - name: transform METADATA and make GT-Overview
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=METADATA repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              -s:scripts/gt-overview_metadata.xsl -o:ghout/metadata.md
+            shell: bash
+      
+          - name: make Compressed table view
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=TABLE repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY \
+              -s:scripts/gt-overview_metadata.xsl -o:ghout/table.md
+            shell: bash
+      
+          - name: detailed table view 
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=OVERVIEW repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
+              -s:scripts/gt-overview_metadata.xsl -o:ghout/overview.md
+            shell: bash
+      
+          - name: generate mets.sh
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=METS repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
+              -s:scripts/gt-overview_metadata.xsl -o:scripts/mets.sh
+            shell: bash
+            
+          - name: generate Metadata JSON file
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=METAJSON repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              -s:scripts/gt-overview_metadata.xsl -o:metadata_out/metadata_l.json
+            shell: bash
+            
+            
+          - name: format json file and copy to gh branch
+            run: |
+              jq '.' metadata_out/metadata_l.json > metadata_out/metadata.json
+              cp metadata_out/metadata.json ghout/
+              rm metadata_out/metadata_l.json
+            
+            
+          - name: generate README
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=README repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
+              -s:scripts/gt-overview_metadata.xsl -o:README.md
+            shell: bash
+            
+          - name: generate METS Volume File
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=METSvolume repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              -s:scripts/gt-overview_metadata.xsl -o:metadata_out/mets.xml
+            shell: bash
+      
+          - name: generate release download List
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=download repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              -s:scripts/gt-overview_metadata.xsl -o:ghout/download.txt
+            shell: bash  
+            
+          - name: delete fileGrp DEFAULT
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=METSdefault repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              -s:scripts/gt-overview_metadata.xsl
+            shell: bash   
+        
+          - name: Index-link
+            run: |
+                cd ghout
+                ln -s metadata.md index.md
+      
+                
+          # Bagit
+      
+          - name: make bagit
+            run: sh scripts/data_structure.sh
+            shell: bash
+      
+      
+          - name: copy css styles and yml files to ghout
+            run: | 
+              cp scripts/table_hide.css ghout/
+              cp scripts/_config.yml ghout/ 
+      
+      
+          - name: archive the metadata files from metadata_out folder
+            uses: thedoctor0/zip-release@master
+            with:
+                filename: metadata-v${{ github.run_number }}.zip
+                path: 'metadata_out'
+      
+          - name: copy metadata.zip to ocrdzip_out
+            run: | 
+              cp metadata-v${{ github.run_number }}.zip ocrdzip_out/
+              
+              
+          - name: Upload Release
+            uses: ncipollo/release-action@v1
+            with:
+                artifacts: 'ocrdzip_out/*.zip'
+                artifactContentType: application/zip
+                name: Release ${{ github.run_number }}_${{ github.ref_name }}
+                body: |
+                  <dl>
+                  <dt>Version:</dt> 
+                  <dd>${{ github.ref_name }}</dd>
+                  <dt>Info:</dt>
+                  <dd>
+                  To make use of Ground Truth, please download the provided zip files.<br/>
+                  The 'ocrd.zip' files are ocr-d-bagit files.<br/>
+                  The 'metadata-v${{ github.run_number }}.zip' file contains metadata for the Ground Truth corpus in both METS and JSON format.<br/>
+                  The 'mets.xml' file enumerates all the documents and BagIt files contained within.<br/>
+                  The bagits correspond to the <a href="https://ocr-d.de/de/spec/ocrd_zip.html">OCR-D Bagit Spec</a>.</dd>
+                  </dl>
+                  </dl>
+                token: ${{ secrets.GITHUB_TOKEN }}
+                
+          - name: Commit README
+            run: |
+              git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git config --local user.name "github-actions[bot]"
+              git add README.md
+              git commit -m "[Automatic] Update readme files" || echo "Nothing to update"
+              git push origin HEAD:main
+      
+      
+          - name: Deploy GT-Overview to GitHub Pages 🚀
+            uses: JamesIves/github-pages-deploy-action@v4.4.1
+            with:
+                branch: gh-pages # The branch the action should deploy to.
+                folder: ghout  # The folder the action should deploy.
