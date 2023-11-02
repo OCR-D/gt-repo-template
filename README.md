@@ -96,9 +96,9 @@ Example:
 
 ## 🤖 How to start the automatic functions?
 
-The github-action-workflow is triggered by assigning a version tag at push.
+The github-action-workflow is triggered by assigning a version tag (e.g. `v1.8.11`) at push.
 The version tag consists of a three-part number code.
-Number code: e.g. 1.8.11
+Number code: e.g. `1.8.11`
 The number code has the following meaning:
 - the first number indicates the version number (1).
 - the second number indicates the feature (8)
