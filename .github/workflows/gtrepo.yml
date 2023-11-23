@@ -235,6 +235,14 @@ jobs:
                 
           # Bagit
       
+          - name: del invalidMets
+            run: sh -ex scripts/data_mets.sh
+            shell: bash    
+          
+          - name: make validMets  
+            run: sh -ex scripts/mets.sh
+            shell: bash      
+
           - name: make bagit
             run: sh scripts/data_structure.sh
             shell: bash
