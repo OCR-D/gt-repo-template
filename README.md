@@ -10,6 +10,7 @@ A template for the creation of a ground truth repo with the following functions 
          - YML (metadata.yml)
       - generation of a GithubPage (ph) for the internet users e.g. https://OCR-D.github.io/gt_structure_1_1/
       - generation Releases
+      - referenced your Ground Truth Repo in [HTR-United GT Record catalog](https://htr-united.github.io/catalog.html)
 
 
 # 👷 👷‍♀️ How to use the template
