@@ -225,7 +225,23 @@ jobs:
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
               output=METSdefault repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
               -s:scripts/gt-overview_metadata.xsl
-            shell: bash   
+            shell: bash
+
+          - name: generate CITATION.cff
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
+              output=CITATION repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              -s:scripts/gt-overview_metadata.xsl -o:rawCITATION.cff
+            shell: bash
+
+          - name: formating CITATION.cff
+            id: lookupSdkVersion2
+            uses: mikefarah/yq@master
+            with:
+              cmd: |
+                yq -I4 rawCITATION.cff > CITATION.cff
+                rm rawCITATION.cff
+            
         
           - name: Index-link
             run: |
@@ -281,7 +297,10 @@ jobs:
                   The 'ocrd.zip' files are ocr-d-bagit files.<br/>
                   The 'metadata-v${{ github.run_number }}.zip' file contains metadata for the Ground Truth corpus in both METS and JSON format.<br/>
                   The 'mets.xml' file enumerates all the documents and BagIt files contained within.<br/>
-                  The bagits correspond to the <a href="https://ocr-d.de/de/spec/ocrd_zip.html">OCR-D Bagit Spec</a>.</dd>
+                  The bagits correspond to the <a href="https://ocr-d.de/de/spec/ocrd_zip.html">OCR-D Bagit Spec</a>.<br/>
+                  The source-code-zip and source-code-tar.gz files only provide metadata, citations, license and readme information.<br/>
+                  If you want to use the source files, please clone the repository.
+                  </dd>
                   </dl>
                   </dl>
                 token: ${{ secrets.GITHUB_TOKEN }}
@@ -293,6 +312,14 @@ jobs:
               git add README.md
               git commit -m "[Automatic] Update readme files" || echo "Nothing to update"
               git push origin HEAD:main
+
+          - name: Commit CITATION.cff
+            run: |
+              git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git config --local user.name "github-actions[bot]"
+              git add CITATION.cff
+              git commit -m "[Automatic] Update CITATION.cff files" || echo "Nothing to update"
+              git push origin HEAD:main    
       
       
           - name: Deploy GT-Overview to GitHub Pages 🚀
