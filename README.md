@@ -111,6 +111,7 @@ You can find metadata about the GT Repo in the following files.
    - mets.xml
    - metadata.json
    - metadata.yml
+   - CITATION.cff
 
 The content of the metadata files is the same, only the formats vary.
 You can find the file at:
@@ -118,6 +119,7 @@ You can find the file at:
    - mets.xml 🠂 included in the zip file of the release
    - metadata.json 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
    - metadata.yml 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/main/METADATA.yml
+   - CITATION.cff 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/main/CITATION.cff
 
             
            
