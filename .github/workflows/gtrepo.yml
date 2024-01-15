@@ -115,16 +115,7 @@ jobs:
           - name: install jq
             run: sudo apt-get install jq
           
-          - name: install ocrd
-            run: |
-              git clone --depth 1 https://github.com/OCR-D/core
-              cd core
-              sudo make deps-ubuntu
-              make install
-              cd ..
-              rm -rf core
-              
-                
+                      
           - name: Download and install saxon
             run: |
               wget https://github.com/Saxonica/Saxon-HE/releases/download/SaxonHE12-3/SaxonHE12-3J.zip 
@@ -249,7 +240,7 @@ jobs:
                 ln -s metadata.md index.md
       
                 
-          # Bagit
+          # Mets handling, Install OCR-D and Bagit 
       
           - name: del invalidMets
             run: sh -ex scripts/data_mets.sh
@@ -259,9 +250,16 @@ jobs:
             run: sh -ex scripts/mets.sh
             shell: bash      
 
-          - name: make bagit
-            run: sh scripts/data_structure.sh
-            shell: bash
+          - name: install ocrd and bagit
+            run: |
+              sudo apt-get install -y python3 imagemagick libgeos-dev
+              python3 -m venv venv         
+              source venv/bin/activate     
+              pip install -U pip 'setuptools>=61'
+              pip install ocrd
+              ocrd --version
+              sh scripts/data_structure.sh   
+              shell: bash
       
       
           - name: copy css styles and yml files to ghout
