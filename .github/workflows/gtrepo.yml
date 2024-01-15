@@ -167,6 +167,13 @@ jobs:
               output=OVERVIEW repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:ghout/overview.md
             shell: bash
+
+          - name: leveling the volume and documents 
+            run: |
+              java -jar saxon-he-10.5.jar -xsl:scripts/parser.xsl \
+              repoName=$GITHUB_REPOSITORY \
+              -s:scripts/parser.xsl -o:ghout/overview-level.md
+            shell: bash  
       
           - name: generate mets.sh
             run: |
