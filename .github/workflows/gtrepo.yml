@@ -170,7 +170,7 @@ jobs:
 
           - name: leveling the volume and documents 
             run: |
-              java -jar saxon-he-10.5.jar -xsl:scripts/parser.xsl \
+              java -jar saxon-he-12.3.jar -xsl:scripts/parser.xsl \
               repoName=$GITHUB_REPOSITORY \
               -s:scripts/parser.xsl -o:ghout/overview-level.md
             shell: bash  
