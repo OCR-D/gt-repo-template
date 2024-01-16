@@ -245,19 +245,16 @@ jobs:
             run: |
                 cd ghout
                 ln -s metadata.md index.md
+    
       
-                
           # Mets handling, Install OCR-D and Bagit 
       
           - name: del invalidMets
             run: sh -ex scripts/data_mets.sh
             shell: bash    
-          
-          - name: make validMets  
-            run: sh -ex scripts/mets.sh
-            shell: bash      
+              
 
-          - name: install ocrd and bagit
+          - name: install ocrd, make validMets and bagit
             run: |
               sudo apt-get install -y python3 imagemagick libgeos-dev
               python3 -m venv venv         
@@ -265,8 +262,18 @@ jobs:
               pip install -U pip 'setuptools>=61'
               pip install ocrd
               ocrd --version
-              sh scripts/data_structure.sh   
-              shell: bash
+              
+
+          - name: make validMets  
+            run: |
+              source venv/bin/activate
+              sh -ex scripts/mets.sh
+                  
+
+          - name: make bagit
+            run: |
+              source venv/bin/activate
+              sh scripts/data_structure.sh
       
       
           - name: copy css styles and yml files to ghout
