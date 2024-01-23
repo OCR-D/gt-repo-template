@@ -74,8 +74,8 @@ The image file should either be referenced via a URL/URI in the METS file or, if
 ├── LICENSE.md
 └── data
       └── document_title or identifer
-          └── GT-PAGE
-               └── mets.xml
+          ├── GT-PAGE
+          └── mets.xml
           
  ```        
 **Cached Image files:**
