@@ -35,10 +35,11 @@ A template for the creation of a ground truth repo with the following functions 
 
 ### Step 4
 
-* A readme file is also created during the analysis. This contains the metadata, data about the corpus and a section that you can customize. 
-* Do you want to customize the readme file?
-* In the `<div id="extent">` section, you can additions to the README file
-* You can find the old version of readme file in the readme folder.
+* **After** creating the repository, saving and pushing the data and automatically analyzing the data with the Github workflow, you can customize the README.md file.   
+* The README.md file is also created during the analysis. This contains the metadata, data about the corpus and a section extent part that you can customize.
+* Do you want to **customize the README.md** file?
+* In the **`<div id="extent">` section**, you can additions to the **README.md** file.
+* You can find the **old version of README.md** file in the `readme_old` folder. The **current version of README.md** file can be found in the main branch.
 
 <hr/>
 
