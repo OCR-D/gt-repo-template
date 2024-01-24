@@ -26,8 +26,8 @@ A template for the creation of a ground truth repo with the following functions 
 
 ### Step 2
 
-* Create metadata data for your ground truth dataset.
-* Metadata is necessary to ensure that your repository is correctly documented. Use the **[metadata form](https://tboenig.github.io/gt-metadata/document-your-gt.html)** to record the metadata correctly.
+* **Create metadata** data for your ground truth dataset.
+* Metadata is necessary to ensure that your repository is **correctly documented**. Use the **[metadata form](https://tboenig.github.io/gt-metadata/document-your-gt.html)** to record the metadata correctly.
 
 
 ### Step 3
