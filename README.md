@@ -29,7 +29,7 @@ A template for the creation of a ground truth repo with the following functions 
 ### Step 3
 
 * The template contains tools that automatically create specific web pages from the stored metadata and ground truth data. You can publish these as GitHub pages.
-   -  1. The analysis we started through a tag. see **How to start the automatic functions?**   
+   -  1. The analysis we started through a tag. see **[How to start the automatic functions?](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#-how-to-start-the-automatic-functions)**   
    -  2. Adjust the GitHub [page setting](/../../settings/pages). Select the [gh-pages branch](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) to do this. 
 
 
