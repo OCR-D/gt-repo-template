@@ -1,4 +1,4 @@
-# 🔑 What does this repo template offer for You?
+# 🔑 What must they do?
 
 A template for the creation of a ground truth repo with the following functions and features: 
    - help for the creation of metadata for the Ground Truth Repo
