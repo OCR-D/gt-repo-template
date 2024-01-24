@@ -26,7 +26,8 @@ A template for the creation of a ground truth repo with the following functions 
 
 ### Step 2
 
-* Metadata is necessary to ensure that your repository is documented correctly. It is best to use the <a href="https://tboenig.github.io/gt-metadata/document-your-gt.html" target="_blank" rel="noopener noreferrer">metadata</a> form to record the metadata.
+* Create metadata data for your ground truth dataset.
+* Metadata is necessary to ensure that your repository is correctly documented. Use the <a href="https://tboenig.github.io/gt-metadata/document-your-gt.html" target="_blank" rel="noopener noreferrer">metadata</a> form to record the metadata correctly.
 
 
 ### Step 3
