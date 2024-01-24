@@ -19,7 +19,7 @@ A template for the creation of a ground truth repo with the following functions 
 
 
 * Create a repository for your ground truth data. Click on the [**Use this Template**](/../../generate) button.
-* Save your data to the repository. Your data should be stored in the **Data folder**. See the Organization of folders and files in the Repo <b>[🗀](#myfootnote1)</b> 
+* Save your data to the repository. Your data should be stored in the **Data folder**. See the **[Organization of folders and files in the Repo](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#--organization-of-folders-and-files-in-the-gt-repo)** 
 
 ### Step 2
 
