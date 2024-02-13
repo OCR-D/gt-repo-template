@@ -73,6 +73,15 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 <mets:FLocat xlink:href="GT-PAGE/[optional directory]/[image directory optional]/00000412.jpg" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
 ```
 
+- File Reference and file group (fileGrp) example
+```xml
+<mets:fileGrp USE="OCR-D-IMG">
+         <mets:file MIMETYPE="image/jpeg" ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001">
+            <mets:FLocat LOCTYPE="OTHER" OTHERLOCTYPE="FILE" xlink:href="jpg/rudolstadt_weiber_1683_0005.jpg"/>
+         </mets:file>
+</mets:fileGrp>
+```
+
 <hr/>
 
 
