@@ -96,14 +96,25 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 If you use your own METS file, the images must be referenced in it.
 
 **Linked image files as URL/URI**:
-- May be referenced in the transcribus PAGE file as a URL/URI.
+- May be referenced in the transcribus PAGE file and eScriptorium Page file as a URL/URI.
 Example:
-``<TranscribusMetadata docId="1256538" pageId="50892347" pageNr="1" tsid="105748322" status="GT" userId="48446" imgUrl="https://files.transkribus.eu/Get?id=SFNIJNJBHWZPNRYZCAIWBJIA&amp;fileType=view" xmlUrl="https://files.transkribus.eu/Get?id=TWZJHYTDEPJDGTXDWJQAXHXH" imageId="27308940"/>`
+
+**Transcribus**
+```xml
+<TranscribusMetadata docId="1256538" pageId="50892347" pageNr="1" tsid="105748322" status="GT" userId="48446" imgUrl="https://files.transkribus.eu/Get?id=SFNIJNJBHWZPNRYZCAIWBJIA&amp;fileType=view" xmlUrl="https://files.transkribus.eu/Get?id=TWZJHYTDEPJDGTXDWJQAXHXH" imageId="27308940"/>
+```
+
+**eScriptorium**
+```xml
+<Metadata externalRef="https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN643815198:00000008/full/full/0/default.jpg">
+```
 
 If you use your own METS file, the images must be referenced in it.
 - Can be referenced in the METS file as URL/URI
 Example:
-``<mets:FLocat xlink:href="https://opendata.uni-halle.de/retrieve/0775684d-82e9-4cb0-8e03-02f34c97949a/00000412.jpg" LOCTYPE="URL"/>``
+```xml
+<mets:FLocat xlink:href="https://opendata.uni-halle.de/retrieve/0775684d-82e9-4cb0-8e03-02f34c97949a/00000412.jpg" LOCTYPE="URL"/>
+```
 
 
 ## 🤖 How to start the automatic functions?
