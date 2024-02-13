@@ -20,7 +20,7 @@ A template for the creation of a ground truth repo with the following functions 
 ### Step 1
 
 
-* Create a repository for your ground truth data. Click on the [**Use this Template**](/../../generate) button.
+* Create a repository for your Ground Truth data publication. Click on the [**Use this Template**](/../../generate) button.
 * Save your data to the repository. Your data should be stored in the **Data folder**. See the **[Organization of folders and files in the Repo](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#--organization-of-folders-and-files-in-the-gt-repo)**.
 * The creation of a **README.md file is not necessary**.
 * The **README.md file** is at first created automatically and can be expanded manually in **a subsequent step**.
