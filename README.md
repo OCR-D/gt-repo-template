@@ -21,7 +21,7 @@ A template for the creation of a ground truth repo with the following functions 
 
 
 * Create a repository for your Ground Truth data publication. Click on the [**Use this Template**](/../../generate) button.
-* Save your data to the repository. Your data should be stored in the **Data folder**. See the **[Organization of folders and files in the Repo](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#--organization-of-folders-and-files-in-the-gt-repo)**.
+* Save your data to the repository. Your data should be stored in the **Data directory**. See the **[Organization of directories and files in the Repo](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#--organization-of-directories-and-files-in-the-gt-repo)**.
 * The creation of a **README.md file is not necessary**.
 * The **README.md file** is at first created automatically and can be expanded manually in **a subsequent step**.
 * The **LICENSE.md** file should match the license of your data. Use [Choose an open source license](https://choosealicense.com/non-software/) to assign the suitable license.  
@@ -45,7 +45,7 @@ A template for the creation of a ground truth repo with the following functions 
 * The README.md file is also created during the analysis. This contains the metadata, data about the corpus and a section extent part that you can customize.
 * Do you want to **customize the README.md** file?
 * In the **`<div id="extent">` section**, you can additions to the **README.md** file.
-* You can find the **old version of README.md** file in the `readme_old` folder. The **current version of README.md** file can be found in the main branch.
+* You can find the **old version of README.md** file in the `readme_old` directory. The **current version of README.md** file can be found in the main branch.
 
 <hr/>
 
@@ -61,7 +61,7 @@ Please note that you use the following **file group (FileGrp)** in the METS file
 ```
 It's important to note that **referencing PAGE files** using URLs/URIs is not permitted. PAGE files should be stored in the repository and referenced within the METS file as follows:
 ```xml
-<mets:FLocat xlink:href="GT-PAGE/[optional folder]/[PAGE-File.xml]" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
+<mets:FLocat xlink:href="GT-PAGE/[optional directory]/[PAGE-File.xml]" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
 ```
 The **image files** should either be referenced via a URL/URI in the METS file or, if the image files are stored in the repository, specified as a file reference in the METS file.
 - URL/URI: 
@@ -70,13 +70,13 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 ```
 - File Reference:
 ```xml
-<mets:FLocat xlink:href="GT-PAGE/[optional folder]/[image folder optional]/00000412.jpg" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
+<mets:FLocat xlink:href="GT-PAGE/[optional directory]/[image directory optional]/00000412.jpg" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
 ```
 
 <hr/>
 
 
-# <a name="myfootnote1">🗀</a>  Organization of folders and files in the GT-Repo
+# <a name="myfootnote1">🗀</a>  Organization of directories and files in the GT-Repo
 
  The structure of the repo is the following:
 
