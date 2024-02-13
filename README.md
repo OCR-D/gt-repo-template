@@ -118,6 +118,13 @@ Example:
 <Metadata externalRef="https://images.sub.uni-goettingen.de/iiif/image/gdz:PPN643815198:00000008/full/full/0/default.jpg">
 ```
 
+**normal Page file (Aletheia)**
+
+```xml
+<Page imageFilename="../jpg/brockes_vergnuegen07_1743_0004.jpg" imageWidth="2848" imageHeight="4288" type="content">
+```
+
+
 If you use your own METS file, the images must be referenced in it.
 - Can be referenced in the METS file as URL/URI
 Example:
