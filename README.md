@@ -1,8 +1,10 @@
 # 🔑 What must they do?
 
 A template for the creation of a ground truth repo with the following functions and features: 
-   - help for the creation of metadata for the Ground Truth Repo
-   - guidelines for filing and organizing the Ground Truth Repo
+   - Publication of the Ground Truth data
+   - Documentation and archiving of the Ground Truth
+      - Assistance with the creation of metadata for the Ground Truth Repo
+   - Specifications for the uniform storage and organization of the Ground Truth Repo
    - automatic functions that control a github-action-workflow:
       - evaluation and generation of metadata in the formats.
          - METS (mets.xml)
