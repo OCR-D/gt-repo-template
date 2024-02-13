@@ -119,10 +119,11 @@ Example:
 ```
 
 **normal Page file (Aletheia)**
-
 ```xml
 <Page imageFilename="../jpg/brockes_vergnuegen07_1743_0004.jpg" imageWidth="2848" imageHeight="4288" type="content">
 ```
+This reference to the image file **must always be relative to the Page file**.
+
 
 
 If you use your own METS file, the images must be referenced in it.
