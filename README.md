@@ -103,9 +103,18 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 - In the same directory as the text transcription (inside the GT-PAGE folder).
 
 If you use your own METS file, the images must be referenced in it.
+- Can be referenced in the METS file as URL/URI
+Example:
+```xml
+<mets:fileGrp USE="OCR-D-IMG">
+         <mets:file MIMETYPE="image/jpeg" ID="OCR-D-IMG_0001" GROUPID="OCR-D-IMG_0001">
+            <mets:FLocat LOCTYPE="OTHER" OTHERLOCTYPE="FILE" xlink:href="jpg/rudolstadt_weiber_1683_0005.jpg"/>
+         </mets:file>
+</mets:fileGrp>
+```
 
-**Linked image files as URL/URI**:
-- May be referenced in the transcribus PAGE file and eScriptorium Page file as a URL/URI.
+**Linked image files in the Page file as directory/file name or URL/URI**:
+- May be referenced in the transcribus PAGE file, eScriptorium Page or in normale Page file as  directory/file name or URL/URI.
 Example:
 
 **Transcribus**
@@ -122,16 +131,11 @@ Example:
 ```xml
 <Page imageFilename="../jpg/brockes_vergnuegen07_1743_0004.jpg" imageWidth="2848" imageHeight="4288" type="content">
 ```
-This reference to the image file **must always be relative to the Page file**.
+This reference to the image file **must always be relative to the Page file**. In this case, the image files must be saved in the repo or referenced in a METS file.
 
 
 
-If you use your own METS file, the images must be referenced in it.
-- Can be referenced in the METS file as URL/URI
-Example:
-```xml
-<mets:FLocat xlink:href="https://opendata.uni-halle.de/retrieve/0775684d-82e9-4cb0-8e03-02f34c97949a/00000412.jpg" LOCTYPE="URL"/>
-```
+
 
 
 ## 🤖 How to start the automatic functions?
