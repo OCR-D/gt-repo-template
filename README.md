@@ -53,13 +53,17 @@ A template for the creation of a ground truth repo with the following functions 
 
 The **gt-repo-template** has the capability to generate METS files for GT data, involving an analysis of both the data structure and PAGE files. Despite the availability of this automated functionality, it is recommended to consider creating a custom METS file.
 
-This METS file can contain various elements, including bibliographic and provenance data. It is essential to ensure compliance with the [OCR-D METS specification](https://ocr-d.de/en/spec/mets#requirements-on-handling-metspage). 
+This METS file can contain various elements, including bibliographic and provenance data. It is important that they respect the [OCR-D METS specification](https://ocr-d.de/en/spec/mets#requirements-on-handling-metspage). 
 
-It's important to note that referencing PAGE files using URLs/URIs is not permitted. PAGE files should be stored in the repository and referenced within the METS file as follows:
+Please note that you use the following **file group (FileGrp)** in the METS file for referencing the images.
+```xml
+<mets:fileGrp USE="OCR-D-IMG">
+```
+It's important to note that **referencing PAGE files** using URLs/URIs is not permitted. PAGE files should be stored in the repository and referenced within the METS file as follows:
 ```xml
 <mets:FLocat xlink:href="GT-PAGE/[optional folder]/[PAGE-File.xml]" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
 ```
-The image file should either be referenced via a URL/URI in the METS file or, if the image files are stored in the repository, specified as a file reference in the METS file.
+The **image files** should either be referenced via a URL/URI in the METS file or, if the image files are stored in the repository, specified as a file reference in the METS file.
 - URL/URI: 
 ```xml
 <mets:FLocat xlink:href="https://opendata.uni-halle.de/retrieve/0775684d-82e9-4cb0-8e03-02f34c97949a/00000412.jpg" LOCTYPE="URL"/>
