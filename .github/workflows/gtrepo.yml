@@ -4,12 +4,11 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
       
-      
-      
   workflow_dispatch:
-
-
-
+      inputs:
+        tag-name:
+          description: Name of the release tag
+          
 jobs:
     job1:
         name: uniTest
@@ -22,7 +21,7 @@ jobs:
           output1: ${{ steps.step4.outputs.test }}
           output2: ${{ steps.step4.outputs.test2 }}
           
-        steps:
+        steps:      
           - name: Git checkout
             id: step1
             uses: actions/checkout@v4
@@ -32,7 +31,7 @@ jobs:
           - name: install analyse xsl-styles
             id: step2
             run: | 
-                git clone https://github.com/tboenig/gt-repo-scripts.git
+                git clone https://github.com/markusweigelt/gt-repo-scripts.git
                 mv gt-repo-scripts/scripts scripts/
                 rm -r gt-repo-scripts
           
@@ -90,6 +89,13 @@ jobs:
               
         
         steps:
+          - name: Using tag name from ref name
+            if: github.event.inputs.tag-name == ''
+            run: echo "TAG_NAME=$GITHUB_REF_NAME" >> $GITHUB_ENV
+
+          - name: Using tag name from input param
+            if: github.event.inputs.tag-name != ''
+            run: echo "TAG_NAME=${{ github.event.inputs.tag-name}}" >> $GITHUB_ENV  
   
           - name: Git checkout
             uses: actions/checkout@v4
@@ -98,7 +104,7 @@ jobs:
             
           - name: install analyse xsl-styles
             run: | 
-              git clone https://github.com/tboenig/gt-repo-scripts.git
+              git clone https://github.com/markusweigelt/gt-repo-scripts.git
               mv gt-repo-scripts/scripts scripts/
               rm -r gt-repo-scripts
       
@@ -150,21 +156,21 @@ jobs:
           - name: transform METADATA and make GT-Overview
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=METADATA repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              output=METADATA repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=${{ env.TAG_NAME }} \
               -s:scripts/gt-overview_metadata.xsl -o:ghout/metadata.md
             shell: bash
       
           - name: make Compressed table view
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=TABLE repoBase=$GITHUB_REF_NAME repoName=$GITHUB_REPOSITORY \
+              output=TABLE repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:ghout/table.md
             shell: bash
       
           - name: detailed table view 
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=OVERVIEW repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
+              output=OVERVIEW repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:ghout/overview.md
             shell: bash
 
@@ -178,14 +184,14 @@ jobs:
           - name: generate mets.sh
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=METS repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
+              output=METS repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:scripts/mets.sh
             shell: bash
             
           - name: generate Metadata JSON file
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=METAJSON repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              output=METAJSON repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=${{ env.TAG_NAME }} \
               -s:scripts/gt-overview_metadata.xsl -o:metadata_out/metadata_l.json
             shell: bash
             
@@ -200,35 +206,35 @@ jobs:
           - name: generate README
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=README repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY \
+              output=README repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:README.md
             shell: bash
             
           - name: generate METS Volume File
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=METSvolume repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              output=METSvolume repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=${{ env.TAG_NAME }} \
               -s:scripts/gt-overview_metadata.xsl -o:metadata_out/mets.xml
             shell: bash
       
           - name: generate release download List
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=download repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              output=download repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=${{ env.TAG_NAME }} \
               -s:scripts/gt-overview_metadata.xsl -o:ghout/download.txt
             shell: bash  
             
           - name: delete fileGrp DEFAULT
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=METSdefault repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              output=METSdefault repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=${{ env.TAG_NAME }} \
               -s:scripts/gt-overview_metadata.xsl
             shell: bash
 
           - name: generate CITATION.cff
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
-              output=CITATION repoBase=$GITHUB_REF_Name repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=$GITHUB_REF_NAME \
+              output=CITATION repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=${{ env.TAG_NAME }} \
               -s:scripts/gt-overview_metadata.xsl -o:rawCITATION.cff
             shell: bash
 
@@ -297,14 +303,15 @@ jobs:
               
           - name: Upload Release
             uses: ncipollo/release-action@v1
+            if: env.TAG_NAME != ''
             with:
                 artifacts: 'ocrdzip_out/*.zip'
                 artifactContentType: application/zip
-                name: Release ${{ github.run_number }}_${{ github.ref_name }}
+                name: Release ${{ github.run_number }}_${{ env.TAG_NAME }}
                 body: |
                   <dl>
                   <dt>Version:</dt> 
-                  <dd>${{ github.ref_name }}</dd>
+                  <dd>${{ env.TAG_NAME }}</dd>
                   <dt>Info:</dt>
                   <dd>
                   To make use of Ground Truth, please download the provided zip files.<br/>
@@ -317,6 +324,7 @@ jobs:
                   </dd>
                   </dl>
                   </dl>
+                tag: ${{ env.TAG_NAME }}
                 token: ${{ secrets.GITHUB_TOKEN }}
                 
           - name: Commit README
