@@ -31,7 +31,7 @@ jobs:
           - name: install analyse xsl-styles
             id: step2
             run: | 
-                git clone https://github.com/markusweigelt/gt-repo-scripts.git
+                git clone https://github.com/tboenig/gt-repo-scripts.git
                 mv gt-repo-scripts/scripts scripts/
                 rm -r gt-repo-scripts
           
@@ -104,7 +104,7 @@ jobs:
             
           - name: install analyse xsl-styles
             run: | 
-              git clone https://github.com/markusweigelt/gt-repo-scripts.git
+              git clone https://github.com/tboenig/gt-repo-scripts.git
               mv gt-repo-scripts/scripts scripts/
               rm -r gt-repo-scripts
       
