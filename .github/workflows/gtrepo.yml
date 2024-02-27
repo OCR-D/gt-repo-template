@@ -305,9 +305,9 @@ jobs:
             uses: ncipollo/release-action@v1
             if: env.TAG_NAME != ''
             with:
+                allowUpdates: true
                 artifacts: 'ocrdzip_out/*.zip'
                 artifactContentType: application/zip
-                name: Release ${{ github.run_number }}_${{ env.TAG_NAME }}
                 body: |
                   <dl>
                   <dt>Version:</dt> 
@@ -324,6 +324,8 @@ jobs:
                   </dd>
                   </dl>
                   </dl>
+                name: Release ${{ github.run_number }}_${{ env.TAG_NAME }}
+                omitNameDuringUpdate: true
                 tag: ${{ env.TAG_NAME }}
                 token: ${{ secrets.GITHUB_TOKEN }}
                 
