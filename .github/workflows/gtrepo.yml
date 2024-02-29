@@ -20,7 +20,7 @@ jobs:
         permissions:
             checks: write
             contents: write
-        steps:      
+        steps:
           - name: Checkout
             uses: actions/checkout@v4
 
@@ -67,13 +67,13 @@ jobs:
     
           - name: install GT Labelling docs
             run: git clone https://github.com/tboenig/gt-guidelines.git
-      
+
           - name: make output directories
             run: mkdir metadata_out ocrdzip_out
-            
+
           - name: move README to readme_old/
             run:  bash scripts/readmefolder.sh
-      
+
           - name: make readme.xml
             run: bash scripts/xreadme.sh  
 
@@ -82,13 +82,13 @@ jobs:
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
               output=METADATA repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY bagitDumpNum=$GITHUB_RUN_NUMBER releaseTag=${{ env.TAG_NAME }} \
               -s:scripts/gt-overview_metadata.xsl -o:ghout/metadata.md
-      
+
           - name: make compressed table view
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
               output=TABLE repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:ghout/table.md
-      
+
           - name: detailed table view 
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
@@ -100,12 +100,14 @@ jobs:
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-level_parser.xsl \
               repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-level_parser.xsl -o:ghout/overview-level.md
-      
+
           - name: generate mets.sh
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
               output=METS repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:scripts/mets.sh
+              ls -l scripts/mets.sh
+              cat scripts/mets.sh
 
           - name: generate Metadata JSON file
             run: |
@@ -190,7 +192,7 @@ jobs:
       
           - name: copy metadata.zip to ocrdzip_out
             run: cp metadata-v${{ github.run_number }}.zip ocrdzip_out/
-              
+
           - name: upload release assets
             uses: ncipollo/release-action@v1
             if: env.TAG_NAME != ''
@@ -225,7 +227,7 @@ jobs:
               git config --local user.name "github-actions[bot]"
               git add README.md
               git commit -m "[Automatic] Update readme files" || echo "Nothing to update"
-              git push origin HEAD:main
+              git push origin HEAD:${{ github.ref_name }}
 
           - name: commit CITATION.cff
             run: |
@@ -233,7 +235,7 @@ jobs:
               git config --local user.name "github-actions[bot]"
               git add CITATION.cff
               git commit -m "[Automatic] Update CITATION.cff files" || echo "Nothing to update"
-              git push origin HEAD:main    
+              git push origin HEAD:${{ github.ref_name }}
 
           - name: deploy GT Overview to GitHub Pages branch 🚀
             uses: JamesIves/github-pages-deploy-action@v4.4.1
