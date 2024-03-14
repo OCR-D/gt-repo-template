@@ -347,7 +347,7 @@ jobs:
       
       
           - name: Deploy GT-Overview to GitHub Pages 🚀
-            uses: JamesIves/github-pages-deploy-action@v4.4.1
+            uses: JamesIves/github-pages-deploy-action@v4
             with:
                 branch: gh-pages # The branch the action should deploy to.
                 folder: ghout  # The folder the action should deploy.
