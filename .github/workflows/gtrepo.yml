@@ -52,7 +52,13 @@ jobs:
             id: lookupSdkVersion
             uses: mikefarah/yq@master
             with:
-             cmd: yq -o=json METADATA.yml > METADATA.json  
+             cmd: |
+                yq -o=json METADATA.yml > METADATA.json
+                
+
+
+          
+          
 
           - name: PathTest
             run: |
@@ -151,7 +157,9 @@ jobs:
             id: lookupSdkVersion
             uses: mikefarah/yq@master
             with:
-              cmd: yq -o=json METADATA.yml > METADATA.json
+              cmd: |
+                yq -o=json METADATA.yml > METADATA.json
+                
                   
           - name: transform METADATA and make GT-Overview
             run: |
@@ -209,6 +217,13 @@ jobs:
               output=README repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:README.md
             shell: bash
+
+
+          - name: generate METADATA_htr_united.yml
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-metadata_htr_united.xsl repoName=${{ github.event.repository.name }} \
+              -s:scripts/gt-metadata_htr_united.xsl
+            shell: bash  
             
           - name: generate METS Volume File
             run: |
@@ -336,6 +351,15 @@ jobs:
               git add README.md
               git commit -m "[Automatic] Update readme files" || echo "Nothing to update"
               git push origin HEAD:main
+
+
+          - name: Commit METADATA_htr_united.yml
+            run: |
+                git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                git config --local user.name "github-actions[bot]"
+                git add ${{ github.event.repository.name }}_METADATA_htr_united.yml
+                git commit -m "[Automatic] Update METADATA_htr_united.yml files" || echo "Nothing to update"
+                git push origin HEAD:main    
 
           - name: Commit CITATION.cff
             run: |
