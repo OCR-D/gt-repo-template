@@ -93,7 +93,7 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 ├── METADATA.yml
 ├── LICENSE.md
 └── data
-      └── document_title or identifer
+      └── document_title or identifier
           ├── GT-PAGE
           └── mets.xml
           
@@ -114,7 +114,7 @@ Example:
 ```
 
 **Linked image files in the Page file as directory/file name or URL/URI**:
-- May be referenced in the transcribus PAGE file, eScriptorium Page or in normale Page file as  directory/file name or URL/URI.
+- May be referenced in the transcribus PAGE file, eScriptorium Page or in normal Page file as  directory/file name or URL/URI.
 Example:
 
 **Transcribus**
