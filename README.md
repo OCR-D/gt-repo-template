@@ -93,7 +93,7 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 ├── METADATA.yml
 ├── LICENSE.md
 └── data
-      └── document_title or identifer
+      └── document_title or identifier
           ├── GT-PAGE
           └── mets.xml
           
