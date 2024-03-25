@@ -114,7 +114,7 @@ Example:
 ```
 
 **Linked image files in the Page file as directory/file name or URL/URI**:
-- May be referenced in the transcribus PAGE file, eScriptorium Page or in normale Page file as  directory/file name or URL/URI.
+- May be referenced in the transcribus PAGE file, eScriptorium Page or in normal Page file as  directory/file name or URL/URI.
 Example:
 
 **Transcribus**
