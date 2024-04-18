@@ -118,6 +118,8 @@ jobs:
           - name: install megarules.xml
             run: | 
               git clone --branch gh-pages --single-branch https://github.com/OCR-D/gt-MufiLevelRules.git
+              mv gt-MufiLevelRules/rules/megalevelrules.xml scripts/megalevelrules.xml
+              rm -r gt-MufiLevelRules
 
 
             
@@ -259,7 +261,6 @@ jobs:
             shell: bash
 
           - name: formating CITATION.cff
-            id: lookupSdkVersion2
             uses: mikefarah/yq@master
             with:
               cmd: |
