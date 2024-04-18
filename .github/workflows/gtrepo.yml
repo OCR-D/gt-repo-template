@@ -48,8 +48,7 @@ jobs:
             run: mkdir ghout
 
 
-          - name: Get SDK Version from config
-            id: lookupSdkVersion
+          - name: transform METADATA.yml to METADATA.json
             uses: mikefarah/yq@master
             with:
              cmd: |
@@ -114,9 +113,16 @@ jobs:
               mv gt-repo-scripts/scripts scripts/
               rm -r gt-repo-scripts
       
-            # Installation GT-Labelling Documentation
-      
+            # Transfer megarules.xml
+
+          - name: install megarules.xml
+            run: | 
+              git clone --branch gh-pages --single-branch https://github.com/OCR-D/gt-MufiLevelRules.git
+
+
             
+            # Installation GT-Labelling Documentation
+                  
           - name: install labeling
             run: |
               git clone https://github.com/tboenig/gt-guidelines.git
@@ -153,8 +159,7 @@ jobs:
           
           # Transformation and analyzing
           
-          - name: Get SDK Version from config
-            id: lookupSdkVersion
+          - name: transform METADATA.yml to METADATA.json
             uses: mikefarah/yq@master
             with:
               cmd: |
