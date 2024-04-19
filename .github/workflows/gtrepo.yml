@@ -47,6 +47,12 @@ jobs:
                 mv gt-repo-scripts/scripts scripts/
                 rm -r gt-repo-scripts
 
+          - name: install levelrules.xml
+            run: | 
+              git clone --branch gh-pages --single-branch https://github.com/OCR-D/gt-MufiLevelRules.git
+              mv gt-MufiLevelRules/rules/megalevelrules.xml scripts/megalevelrules.xml
+              rm -r gt-MufiLevelRules
+
           - name: convert metadata from YAML to JSON
             uses: mikefarah/yq@master
             with:
@@ -127,6 +133,11 @@ jobs:
               output=README repoBase=${{ env.TAG_NAME }} repoName=$GITHUB_REPOSITORY \
               -s:scripts/gt-overview_metadata.xsl -o:README.md
 
+          - name: generate METADATA_htr_united.yml
+            run: |
+              java -jar saxon-he-12.3.jar -xsl:scripts/gt-metadata_htr_united.xsl repoName=${{ github.event.repository.name }} \
+              -s:scripts/gt-metadata_htr_united.xsl
+            
           - name: generate METS Volume File
             run: |
               java -jar saxon-he-12.3.jar -xsl:scripts/gt-overview_metadata.xsl \
@@ -228,6 +239,14 @@ jobs:
               git add README.md
               git commit -m "[Automatic] Update readme files" || echo "Nothing to update"
               git push origin HEAD:${{ github.ref_name }}
+
+          - name: commit METADATA_htr_united.yml
+            run: |
+                git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                git config --local user.name "github-actions[bot]"
+                git add ${{ github.event.repository.name }}_METADATA_htr_united.yml
+                git commit -m "[Automatic] Update METADATA_htr_united.yml files" || echo "Nothing to update"
+                git push origin HEAD:${{ github.ref_name }}
 
           - name: commit CITATION.cff
             run: |

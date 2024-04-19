@@ -29,7 +29,7 @@ A template for the creation of a ground truth repo with the following functions 
 ### Step 2
 
 * **Create metadata** data for your ground truth dataset.
-* Metadata is necessary to ensure that your repository is **correctly documented**. Use the **[metadata form](https://tboenig.github.io/gt-metadata/document-your-gt.html)** to record the metadata correctly.
+* Metadata is necessary to ensure that your repository is **correctly documented**. Use the **[metadata form](https://ocr-d.de/gt-metadata/document-your-gt.html)** to record the metadata correctly.
 
 
 ### Step 3
@@ -93,7 +93,7 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 ├── METADATA.yml
 ├── LICENSE.md
 └── data
-      └── document_title or identifer
+      └── document_title or identifier
           ├── GT-PAGE
           └── mets.xml
           
