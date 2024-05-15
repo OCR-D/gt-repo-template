@@ -170,7 +170,7 @@ jobs:
                 rm rawCITATION.cff
 
           - name: symlink metadata as index
-            run: ln -s ghout/metadata.md ghout/index.md
+            run: ln -s metadata.md ghout/index.md
     
           - name: ensure valid METS
             run: bash -ex scripts/data_mets.sh
