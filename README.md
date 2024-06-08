@@ -1,6 +1,6 @@
 # 🔑 What must they do?
 
-A template for the creation of a ground truth repo with the following functions and features: 
+A template for the creation of a ground truth repo with the following functions and features:
    - Publication of the Ground Truth data
    - Documentation and archiving of the Ground Truth
       - Assistance with the creation of metadata for the Ground Truth Repo
@@ -24,7 +24,7 @@ A template for the creation of a ground truth repo with the following functions 
 * Save your data to the repository. Your data should be stored in the **Data directory**. See the **[Organization of directories and files in the Repo](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#--organization-of-directories-and-files-in-the-gt-repo)**.
 * The creation of a **README.md file is not necessary**.
 * The **README.md file** is at first created automatically and can be expanded manually in **a subsequent step**.
-* The **LICENSE.md** file should match the license of your data. Use [Choose an open source license](https://choosealicense.com/non-software/) to assign the suitable license.  
+* The **LICENSE.md** file should match the license of your data. Use [Choose an open source license](https://choosealicense.com/non-software/) to assign the suitable license.
 
 ### Step 2
 
@@ -35,13 +35,13 @@ A template for the creation of a ground truth repo with the following functions 
 ### Step 3
 
 - The template contains tools that automatically create specific web pages from the stored metadata and ground truth data. You can publish these as GitHub pages. What do you do for this.
-   1. The analysis we started through a tag. see **[How to start the automatic functions?](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#-how-to-start-the-automatic-functions)**   
+   1. The analysis we started through a tag. see **[How to start the automatic functions?](https://github.com/OCR-D/gt-repo-template/blob/main/README.md#-how-to-start-the-automatic-functions)**
    2. Adjust the GitHub [page setting](/../../settings/pages). Select the [gh-pages branch](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) to do this.
 
 
 ### Step 4
 
-* **After** creating the repository, saving and pushing the data and automatically analyzing the data with the Github workflow, you can customize the README.md file.   
+* **After** creating the repository, saving and pushing the data and automatically analyzing the data with the Github workflow, you can customize the README.md file.
 * The README.md file is also created during the analysis. This contains the metadata, data about the corpus and a section extent part that you can customize.
 * Do you want to **customize the README.md** file?
 * In the **`<div id="extent">` section**, you can additions to the **README.md** file.
@@ -49,11 +49,11 @@ A template for the creation of a ground truth repo with the following functions 
 
 <hr/>
 
-# <a name="myfootnote1">🗉</a>  METS File
+# <a name="myfootnote1">🗉</a> METS File
 
 The **gt-repo-template** has the capability to generate METS files for GT data, involving an analysis of both the data structure and PAGE files. Despite the availability of this automated functionality, it is recommended to consider creating a custom METS file.
 
-This METS file can contain various elements, including bibliographic and provenance data. It is important that they respect the [OCR-D METS specification](https://ocr-d.de/en/spec/mets#requirements-on-handling-metspage). 
+This METS file can contain various elements, including bibliographic and provenance data. It is important that they respect the [OCR-D METS specification](https://ocr-d.de/en/spec/mets#requirements-on-handling-metspage).
 
 Please note that you use the following **file group (FileGrp)** in the METS file for referencing the images.
 ```xml
@@ -64,7 +64,7 @@ It's important to note that **referencing PAGE files** using URLs/URIs is not pe
 <mets:FLocat xlink:href="GT-PAGE/[optional directory]/[PAGE-File.xml]" LOCTYPE="OTHER" OTHERLOCTYPE="FILE"/>
 ```
 The **image files** should either be referenced via a URL/URI in the METS file or, if the image files are stored in the repository, specified as a file reference in the METS file.
-- URL/URI: 
+- URL/URI:
 ```xml
 <mets:FLocat xlink:href="https://opendata.uni-halle.de/retrieve/0775684d-82e9-4cb0-8e03-02f34c97949a/00000412.jpg" LOCTYPE="URL"/>
 ```
@@ -85,7 +85,7 @@ The **image files** should either be referenced via a URL/URI in the METS file o
 <hr/>
 
 
-# <a name="myfootnote1">🗀</a>  Organization of directories and files in the GT-Repo
+# <a name="myfootnote1">🗀</a> Organization of directories and files in the GT-Repo
 
  The structure of the repo is the following:
 
@@ -96,8 +96,8 @@ The **image files** should either be referenced via a URL/URI in the METS file o
       └── document_title or identifier
           ├── GT-PAGE
           └── mets.xml
-          
- ```        
+
+ ```
 **Cached Image files:**
 - In a separate directory.
 - In the same directory as the text transcription (inside the GT-PAGE folder).
@@ -114,7 +114,7 @@ Example:
 ```
 
 **Linked image files in the Page file as directory/file name or URL/URI**:
-- May be referenced in the transkribus PAGE file, eScriptorium Page or in normal Page file as  directory/file name or URL/URI.
+- May be referenced in the transkribus PAGE file, eScriptorium Page or in normal Page file as directory/file name or URL/URI.
 Example:
 
 **Transkribus**
@@ -141,7 +141,7 @@ This reference to the image file **must always be relative to the Page file**. I
 ## 🤖 How to start the automatic functions?
 
 The github-action-workflow is triggered by assigning a version tag (e.g. `v1.8.11`) at push.
-The version tag consists of **the lowercase letter `v`** (stands for version) and **a three-part numerical code**. 
+The version tag consists of **the lowercase letter `v`** (stands for version) and **a three-part numerical code**.
 Number code: e.g. `1.8.11`
 The number code has the following meaning:
 - the first number indicates the version number (1).
@@ -160,15 +160,6 @@ The content of the metadata files is the same, only the formats vary.
 You can find the file at:
 
    - mets.xml 🠂 included in the zip file of the release
-   - metadata.json 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
-   - metadata.yml 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/main/METADATA.yml
-   - CITATION.cff 🠂 e.g.  https://github.com/OCR-D/gt_structure_1_1/blob/main/CITATION.cff
-
-            
-           
-
-
-
-
-
-  
+   - metadata.json 🠂 e.g. https://github.com/OCR-D/gt_structure_1_1/blob/gh-pages/metadata.json and alternativ included in the zip file of the release
+   - metadata.yml 🠂 e.g. https://github.com/OCR-D/gt_structure_1_1/blob/main/METADATA.yml
+   - CITATION.cff 🠂 e.g. https://github.com/OCR-D/gt_structure_1_1/blob/main/CITATION.cff
