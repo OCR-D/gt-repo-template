@@ -114,12 +114,12 @@ Example:
 ```
 
 **Linked image files in the Page file as directory/file name or URL/URI**:
-- May be referenced in the transcribus PAGE file, eScriptorium Page or in normal Page file as  directory/file name or URL/URI.
+- May be referenced in the transkribus PAGE file, eScriptorium Page or in normal Page file as  directory/file name or URL/URI.
 Example:
 
-**Transcribus**
+**Transkribus**
 ```xml
-<TranscribusMetadata docId="1256538" pageId="50892347" pageNr="1" tsid="105748322" status="GT" userId="48446" imgUrl="https://files.transkribus.eu/Get?id=SFNIJNJBHWZPNRYZCAIWBJIA&amp;fileType=view" xmlUrl="https://files.transkribus.eu/Get?id=TWZJHYTDEPJDGTXDWJQAXHXH" imageId="27308940"/>
+<TranskribusMetadata docId="1256538" pageId="50892347" pageNr="1" tsid="105748322" status="GT" userId="48446" imgUrl="https://files.transkribus.eu/Get?id=SFNIJNJBHWZPNRYZCAIWBJIA&amp;fileType=view" xmlUrl="https://files.transkribus.eu/Get?id=TWZJHYTDEPJDGTXDWJQAXHXH" imageId="27308940"/>
 ```
 
 **eScriptorium**
